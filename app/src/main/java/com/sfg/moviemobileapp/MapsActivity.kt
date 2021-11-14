@@ -25,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -33,8 +34,11 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.sfg.moviemobileapp.databinding.ActivityMapsBinding
+import com.sfg.moviemobileapp.movie.MovieListActivity
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(),
+    OnMapReadyCallback,
+    GoogleMap.OnMarkerClickListener {
 
     private lateinit var binding: ActivityMapsBinding
 
@@ -194,6 +198,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         updateLocationUI()
     }
 
+    override fun onMarkerClick(p0: Marker): Boolean {
+        Intent(this, MovieListActivity::class.java)
+            .run { startActivity(this) }
+
+        return true
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
@@ -202,6 +212,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
                         Log.i(TAG, "Place: ${place.name}, ${place.id}")
+                        showMarkerOfSearchPlace(place)
                         showRouteToPlaceSearch(place)
                     }
                 }
@@ -221,6 +232,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    private fun showMarkerOfSearchPlace(place: Place) {
+        map?.addMarker(
+            MarkerOptions()
+                .position(place.latLng)
+                .title(place.name)
+        )
+        map?.setOnMarkerClickListener(this)
+    }
+
     private fun showRouteToPlaceSearch(place: Place) {
         //Note: For this demo, i just draw the line between 2 locations
         map?.addPolyline(
@@ -232,7 +252,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 )
         )
     }
-
 
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
