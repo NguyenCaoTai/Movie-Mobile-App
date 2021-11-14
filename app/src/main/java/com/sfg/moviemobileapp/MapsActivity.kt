@@ -2,10 +2,14 @@ package com.sfg.moviemobileapp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -21,8 +25,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.sfg.moviemobileapp.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -74,6 +83,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.search_place_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.option_search_place) {
+            searchPlace()
+        }
+        return true
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -173,6 +194,46 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         updateLocationUI()
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        Log.i(TAG, "Place: ${place.name}, ${place.id}")
+                        showRouteToPlaceSearch(place)
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                        Log.i(TAG, status.statusMessage ?: "")
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun showRouteToPlaceSearch(place: Place) {
+        //Note: For this demo, i just draw the line between 2 locations
+        map?.addPolyline(
+            PolylineOptions()
+                .clickable(true)
+                .add(
+                    place.latLng,
+                    lastKnownLocation?.let { LatLng(it.latitude, it.longitude) }
+                )
+        )
+    }
+
+
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
         if (map == null) {
@@ -193,6 +254,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun searchPlace() {
+        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            .build(this)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    }
+
     companion object {
         private val TAG = MapsActivity::class.java.simpleName
         private const val DEFAULT_ZOOM = 15
@@ -200,5 +269,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         private const val KEY_CAMERA_POSITION = "camera_position"
         private const val KEY_LOCATION = "location"
+
+        private const val AUTOCOMPLETE_REQUEST_CODE = 1
     }
 }
