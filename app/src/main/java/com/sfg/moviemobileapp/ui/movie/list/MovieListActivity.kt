@@ -1,9 +1,9 @@
-package com.sfg.moviemobileapp.movie
+package com.sfg.moviemobileapp.ui.movie.list
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.sfg.moviemobileapp.R
-import com.sfg.moviemobileapp.movie.list.MovieListFragment
+import com.sfg.moviemobileapp.ui.movie.list.MovieListFragment
 
 class MovieListActivity : AppCompatActivity() {
 

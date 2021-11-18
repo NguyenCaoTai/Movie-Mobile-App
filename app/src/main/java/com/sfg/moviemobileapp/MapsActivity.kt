@@ -34,7 +34,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.sfg.moviemobileapp.databinding.ActivityMapsBinding
-import com.sfg.moviemobileapp.movie.MovieListActivity
+import com.sfg.moviemobileapp.ui.movie.list.MovieListActivity
 
 class MapsActivity : AppCompatActivity(),
     OnMapReadyCallback,
