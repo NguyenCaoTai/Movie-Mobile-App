@@ -1,4 +1,4 @@
-package com.sfg.moviemobileapp.data.api
+package com.sfg.moviemobileapp.data.api.dto
 
 data class Movie(
     val adult: Boolean,

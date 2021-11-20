@@ -1,17 +1,17 @@
 package com.sfg.moviemobileapp.data.repository
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingSource.LoadResult.Page
 import androidx.paging.PagingState
-import com.sfg.moviemobileapp.data.api.Movie
+import com.sfg.moviemobileapp.data.api.dto.Movie
 import com.sfg.moviemobileapp.data.api.MovieApi
+import com.sfg.moviemobileapp.data.repository.model.MovieType
 import java.io.IOException
 import retrofit2.HttpException
 
 class PageIndexPagingSource(
     private val movieApi: MovieApi,
-    private val movieType: MovieApi.MovieType
+    private val movieType: MovieType
 ) : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> =
         try {

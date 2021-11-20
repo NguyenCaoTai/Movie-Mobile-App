@@ -1,7 +1,9 @@
 package com.sfg.moviemobileapp.data.api
 
 import android.util.Log
-import okhttp3.HttpUrl
+import com.sfg.moviemobileapp.data.api.dto.ListingResponse
+import com.sfg.moviemobileapp.data.api.dto.Movie
+import com.sfg.moviemobileapp.data.api.dto.MovieDetail
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,17 +22,18 @@ interface MovieApi {
         @Query("api_key") apiKey: String = "a2c5deb5fdb2ebb10ce53c1fe6b06eca",
     ): ListingResponse
 
-    class ListingResponse(
-        val page: Int,
-        val results: List<Movie>
-    )
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") id: String,
+        @Query("api_key") apiKey: String = "a2c5deb5fdb2ebb10ce53c1fe6b06eca"
+    ): MovieDetail
 
     companion object {
         const val PAGE_INIT = 1
         const val PAGE_STEP = 1
         const val PAGE_SIZE = 20
-
         private const val BASE_URL = "https://api.themoviedb.org/3/"
+
         fun create(): MovieApi {
             val logger = HttpLoggingInterceptor { Log.d("API", it) }
             logger.level = HttpLoggingInterceptor.Level.BASIC
@@ -45,10 +48,5 @@ interface MovieApi {
                 .build()
                 .create(MovieApi::class.java)
         }
-    }
-
-    enum class MovieType(val type: String){
-        NowPlaying("now_playing"),
-        TopRated("top_rated")
     }
 }
