@@ -9,22 +9,23 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sfg.moviemobileapp.R
 import com.sfg.moviemobileapp.data.api.MovieApi
-import com.sfg.moviemobileapp.databinding.MovieListFragmentBinding
+import com.sfg.moviemobileapp.data.repository.model.MovieType
+import com.sfg.moviemobileapp.databinding.FragmentMovieListCollectionBinding
 
-class MovieListFragment : Fragment() {
+class MovieListCollectionFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MovieListFragment()
+        fun newInstance() = MovieListCollectionFragment()
     }
 
-    lateinit var binding: MovieListFragmentBinding
+    lateinit var binding: FragmentMovieListCollectionBinding
         private set
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = MovieListFragmentBinding.inflate(layoutInflater)
+        binding = FragmentMovieListCollectionBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -50,7 +51,7 @@ class MovieCollectionPagerAdapter(fragment: Fragment) :
 
     override fun createFragment(position: Int): Fragment =
         when (position) {
-            0 -> MovieListByTypeFragment.newInstance(MovieApi.MovieType.NowPlaying)
-            else -> MovieListByTypeFragment.newInstance(MovieApi.MovieType.TopRated)
+            0 -> MovieListByTypeFragment.newInstance(MovieType.NowPlaying)
+            else -> MovieListByTypeFragment.newInstance(MovieType.TopRated)
         }
 }

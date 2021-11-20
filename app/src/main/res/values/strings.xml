@@ -7,4 +7,9 @@
     <string name="post_subtitle">Submitted by %s</string>
     <string name="title_now_playing">Now Playing</string>
     <string name="title_top_rated">Top rated</string>
+    <string name="title_activity_movie_detail_host">MovieDetailHostActivity</string>
+    <string name="title_movie_list">Items</string>
+    <string name="title_movie_detail">Movie Detail</string>
+    <string name="desc_backdrop_image">Backdrop Image</string>
+    <string name="error_dialog_title">Alert</string>
 </resources>

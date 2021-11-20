@@ -1,4 +1,4 @@
-package com.sfg.moviemobileapp
+package com.sfg.moviemobileapp.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -33,8 +33,10 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.sfg.moviemobileapp.BuildConfig
+import com.sfg.moviemobileapp.R
 import com.sfg.moviemobileapp.databinding.ActivityMapsBinding
-import com.sfg.moviemobileapp.ui.movie.list.MovieListActivity
+import com.sfg.moviemobileapp.ui.movie.MovieListActivity
 
 class MapsActivity : AppCompatActivity(),
     OnMapReadyCallback,

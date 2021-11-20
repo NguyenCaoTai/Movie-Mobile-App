@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.sfg.moviemobileapp.data.api.MovieApi
 import com.sfg.moviemobileapp.data.repository.MovieRepository
+import com.sfg.moviemobileapp.data.repository.model.MovieType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -12,14 +13,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 class MovieListViewModel(
     private val repository: MovieRepository,
 ) : ViewModel() {
-    val loadEvent = MutableSharedFlow<MovieApi.MovieType>(1)
+    val loadEvent = MutableSharedFlow<MovieType>(1)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val posts = loadEvent
         .flatMapLatest {
             when (it) {
-                MovieApi.MovieType.NowPlaying -> repository.moviePlaying()
-                MovieApi.MovieType.TopRated -> repository.movieTopRate()
+                MovieType.NowPlaying -> repository.moviePlaying()
+                MovieType.TopRated -> repository.movieTopRate()
             }
         }
         .cachedIn(viewModelScope)

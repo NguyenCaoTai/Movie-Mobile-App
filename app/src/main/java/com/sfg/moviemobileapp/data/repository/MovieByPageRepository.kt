@@ -3,9 +3,12 @@ package com.sfg.moviemobileapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.sfg.moviemobileapp.data.api.Movie
+import com.sfg.moviemobileapp.data.api.dto.Movie
 import com.sfg.moviemobileapp.data.api.MovieApi
+import com.sfg.moviemobileapp.data.api.dto.MovieDetail
+import com.sfg.moviemobileapp.data.repository.model.MovieType
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class MovieByPageRepository(private val movieApi: MovieApi) : MovieRepository {
 
@@ -16,7 +19,7 @@ class MovieByPageRepository(private val movieApi: MovieApi) : MovieRepository {
         ) {
             PageIndexPagingSource(
                 movieApi = movieApi,
-                MovieApi.MovieType.NowPlaying
+                MovieType.NowPlaying
             )
         }.flow
 
@@ -26,7 +29,12 @@ class MovieByPageRepository(private val movieApi: MovieApi) : MovieRepository {
         ) {
             PageIndexPagingSource(
                 movieApi = movieApi,
-                MovieApi.MovieType.TopRated
+                MovieType.TopRated
             )
         }.flow
+
+    override fun movieDetail(id: String): Flow<MovieDetail> =
+        flow {
+            emit(movieApi.getMovieDetail(id))
+        }
 }

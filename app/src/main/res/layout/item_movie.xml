@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@android:drawable/gallery_thumb" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -45,14 +45,16 @@
             android:id="@+id/overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             tools:text="submitted by foo" />
 
         <TextView
             android:id="@+id/vote_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@android:drawable/ic_menu_set_as"
             android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:drawableStartCompat="@android:drawable/btn_star"
             tools:text="7.8" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

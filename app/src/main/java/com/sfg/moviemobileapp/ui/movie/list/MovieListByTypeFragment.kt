@@ -5,18 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.sfg.moviemobileapp.R
 import com.sfg.moviemobileapp.data.api.MovieApi
 import com.sfg.moviemobileapp.data.repository.MovieByPageRepository
-import com.sfg.moviemobileapp.databinding.MovieListBinding
-import com.sfg.moviemobileapp.databinding.MovieListFragmentBinding
+import com.sfg.moviemobileapp.data.repository.model.MovieType
+import com.sfg.moviemobileapp.databinding.FragmentMovieListBinding
+import com.sfg.moviemobileapp.ui.movie.detail.MovieDetailFragment
 import com.sfg.moviemobileapp.ui.movie.list.adapter.MovieAdapter
 import com.sfg.moviemobileapp.ui.movie.list.adapter.MoviesLoadStateAdapter
 import com.sfg.moviemobileapp.ui.movie.list.adapter.asMergedLoadStates
@@ -30,7 +34,7 @@ class MovieListByTypeFragment : Fragment() {
     companion object {
         private const val ARG_MOVIE_TYPE = "ARG_MOVIE_TYPE"
 
-        fun newInstance(movieType: MovieApi.MovieType) =
+        fun newInstance(movieType: MovieType) =
             MovieListByTypeFragment()
                 .apply {
                     arguments = Bundle().apply {
@@ -39,7 +43,7 @@ class MovieListByTypeFragment : Fragment() {
                 }
     }
 
-    lateinit var binding: MovieListBinding
+    lateinit var binding: FragmentMovieListBinding
         private set
     private val model: MovieListViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {
@@ -64,7 +68,7 @@ class MovieListByTypeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = MovieListBinding.inflate(layoutInflater)
+        binding = FragmentMovieListBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -80,12 +84,19 @@ class MovieListByTypeFragment : Fragment() {
 
         arguments
             ?.takeIf { it.containsKey(ARG_MOVIE_TYPE) }
-            ?.let { it.getSerializable(ARG_MOVIE_TYPE) as MovieApi.MovieType }
+            ?.let { it.getSerializable(ARG_MOVIE_TYPE) as MovieType }
             ?.run { model.loadEvent.tryEmit(this) }
     }
 
     private fun initAdapter() {
-        adapter = MovieAdapter()
+        adapter = MovieAdapter { itemView ->
+            bundleOf(
+                MovieDetailFragment.ARG_ITEM_ID to (itemView.tag as Int).toString()
+            ).run {
+                itemView.findNavController()
+                    .navigate(R.id.show_movie_detail, this)
+            }
+        }
 
         binding.list.addItemDecoration(
             DividerItemDecoration(

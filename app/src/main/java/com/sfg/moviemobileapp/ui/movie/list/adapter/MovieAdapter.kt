@@ -1,15 +1,21 @@
 package com.sfg.moviemobileapp.ui.movie.list.adapter
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.sfg.moviemobileapp.data.api.Movie
+import com.sfg.moviemobileapp.data.api.dto.Movie
 
-class MovieAdapter
-    : PagingDataAdapter<Movie, MovieViewHolder>(MOVIE_COMPARATOR) {
+class MovieAdapter(
+    private val onItemClickListener: View.OnClickListener
+) : PagingDataAdapter<Movie, MovieViewHolder>(MOVIE_COMPARATOR) {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder
+            .apply {
+                bind(getItem(position))
+                itemView.setOnClickListener(onItemClickListener)
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

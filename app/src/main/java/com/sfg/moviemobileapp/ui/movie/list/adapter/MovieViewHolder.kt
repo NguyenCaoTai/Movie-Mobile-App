@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sfg.moviemobileapp.R
-import com.sfg.moviemobileapp.data.api.Movie
+import com.sfg.moviemobileapp.data.api.dto.Movie
 
 class MovieViewHolder(view: View) :
     RecyclerView.ViewHolder(view) {
@@ -19,13 +19,10 @@ class MovieViewHolder(view: View) :
     private val thumbnail: ImageView = view.findViewById(R.id.thumbnail)
     private var movie: Movie? = null
 
-    init {
-        view.setOnClickListener {
-        }
-    }
-
     fun bind(movie: Movie?) {
         this.movie = movie
+        itemView.tag = movie?.id
+
         title.text = movie?.title
         releaseDate.text = movie?.release_date?.split("-")?.get(0)
         overview.text = movie?.overview
@@ -43,7 +40,7 @@ class MovieViewHolder(view: View) :
     companion object {
         fun create(parent: ViewGroup): MovieViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.movie_item, parent, false)
+                .inflate(R.layout.item_movie, parent, false)
             return MovieViewHolder(view)
         }
     }

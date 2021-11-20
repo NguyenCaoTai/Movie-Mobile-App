@@ -8,15 +8,15 @@ import androidx.paging.LoadState.Error
 import androidx.paging.LoadState.Loading
 import androidx.recyclerview.widget.RecyclerView
 import com.sfg.moviemobileapp.R
-import com.sfg.moviemobileapp.databinding.NetworkStateItemBinding
+import com.sfg.moviemobileapp.databinding.ItemNetworkStateBinding
 
 class NetworkStateItemViewHolder(
     parent: ViewGroup,
     private val retryCallback: () -> Unit
 ) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.network_state_item, parent, false)
+    LayoutInflater.from(parent.context).inflate(R.layout.item_network_state, parent, false)
 ) {
-    private val binding = NetworkStateItemBinding.bind(itemView)
+    private val binding = ItemNetworkStateBinding.bind(itemView)
     private val progressBar = binding.progressBar
     private val errorMsg = binding.errorMsg
     private val retry = binding.retryButton
