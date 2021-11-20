@@ -13,9 +13,9 @@ Movie Mobile App
     + Checkout the source code from master branch.
     + Register 2 API keys(google map API, Movie database API), and saving correspond both API key in local.properties at root of project.
         - Register the google map api key, and enable APIs (Maps SDK for Android, Places API). And saving as "MAPS_API_KEY" variable config
-            ex: MAPS_API_KEY=AIzaSyB4iLE-McoY30Gh_-YxspM4mspqhGozbSI
+            ex: MAPS_API_KEY="api_key"
         - Register the API key for The Movie Database API at https://developers.themoviedb.org/3/getting-started/introduction. And saving as "TMDB_API_KEY" variable config
-            ex: TMDB_API_KEY=a2c5deb5fdb2ebb10ce53c1fe6b06eca
+            ex: TMDB_API_KEY="api_key"
       
     + Open the project by Android Studio, build, run app, and make the toast. :)
     
