@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sfg.moviemobileapp">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -15,27 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieMobileApp">
-        <activity
-            android:name=".movie.MovieListActivity"
-            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".ui.movie.MovieListActivity"
             android:exported="true"
             android:label="@string/title_activity_maps">
             <intent-filter>
@@ -44,6 +35,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+<!--        <activity-->
+<!--            android:name=".ui.movie.MovieListActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/title_activity_movie_detail_host" />-->
+
     </application>
 
 </manifest>

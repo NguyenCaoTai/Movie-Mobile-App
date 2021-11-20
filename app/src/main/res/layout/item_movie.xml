@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            app:drawableStartCompat="@android:drawable/btn_star"
+            app:drawableStartCompat="@drawable/ic_baseline_star_rate_18"
             tools:text="7.8" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,4 +12,5 @@
     <string name="title_movie_detail">Movie Detail</string>
     <string name="desc_backdrop_image">Backdrop Image</string>
     <string name="error_dialog_title">Alert</string>
+    <string name="title_movie_screen">WizeMovie</string>
 </resources>

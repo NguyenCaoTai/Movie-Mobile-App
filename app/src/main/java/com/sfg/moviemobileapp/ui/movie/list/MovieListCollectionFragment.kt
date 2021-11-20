@@ -35,11 +35,16 @@ class MovieListCollectionFragment : Fragment() {
         binding.viewpagerMovie.adapter = MovieCollectionPagerAdapter(this)
 
         TabLayoutMediator(binding.tabLayoutMovie, binding.viewpagerMovie) { tab, position ->
-            tab.text =
-                when (position) {
-                    0 -> getString(R.string.title_now_playing)
-                    else -> getString(R.string.title_top_rated)
+            when (position) {
+                0 -> {
+                    tab.text = getString(R.string.title_now_playing)
+                    tab.setIcon(R.drawable.ic_action_movie)
                 }
+                else -> {
+                    tab.text = getString(R.string.title_top_rated)
+                    tab.setIcon(R.drawable.ic_action_emoji_event)
+                }
+            }
         }.attach()
     }
 }

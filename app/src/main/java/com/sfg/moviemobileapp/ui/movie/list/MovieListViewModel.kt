@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.sfg.moviemobileapp.data.api.MovieApi
 import com.sfg.moviemobileapp.data.repository.MovieRepository
+import com.sfg.moviemobileapp.data.repository.model.MovieItem
 import com.sfg.moviemobileapp.data.repository.model.MovieType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 class MovieListViewModel(
     private val repository: MovieRepository,

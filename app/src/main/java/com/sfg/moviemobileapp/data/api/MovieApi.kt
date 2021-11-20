@@ -1,6 +1,7 @@
 package com.sfg.moviemobileapp.data.api
 
 import android.util.Log
+import com.sfg.moviemobileapp.BuildConfig
 import com.sfg.moviemobileapp.data.api.dto.ListingResponse
 import com.sfg.moviemobileapp.data.api.dto.Movie
 import com.sfg.moviemobileapp.data.api.dto.MovieDetail
@@ -19,13 +20,13 @@ interface MovieApi {
     suspend fun getMovies(
         @Path("type") type: String,
         @Query("page") page: Int,
-        @Query("api_key") apiKey: String = "a2c5deb5fdb2ebb10ce53c1fe6b06eca",
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
     ): ListingResponse
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetail(
         @Path("movie_id") id: String,
-        @Query("api_key") apiKey: String = "a2c5deb5fdb2ebb10ce53c1fe6b06eca"
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY
     ): MovieDetail
 
     companion object {

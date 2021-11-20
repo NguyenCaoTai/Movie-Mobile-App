@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/movie_list_fragment"
         android:name="com.sfg.moviemobileapp.ui.movie.list.MovieListCollectionFragment"
-        android:label="MovieListFragment">
+        android:label="@string/title_movie_screen">
         <action
             android:id="@+id/show_movie_detail"
             app:destination="@id/movie_detail_fragment" />
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/movie_detail_fragment"
         android:name="com.sfg.moviemobileapp.ui.movie.detail.MovieDetailFragment"
-        android:label="movie_detail"
+        android:label="@string/title_movie_screen"
         tools:layout="@layout/fragment_movie_detail">
         <argument
             android:name="item_id"

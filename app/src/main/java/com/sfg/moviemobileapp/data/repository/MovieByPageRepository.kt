@@ -6,13 +6,14 @@ import androidx.paging.PagingData
 import com.sfg.moviemobileapp.data.api.dto.Movie
 import com.sfg.moviemobileapp.data.api.MovieApi
 import com.sfg.moviemobileapp.data.api.dto.MovieDetail
+import com.sfg.moviemobileapp.data.repository.model.MovieItem
 import com.sfg.moviemobileapp.data.repository.model.MovieType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class MovieByPageRepository(private val movieApi: MovieApi) : MovieRepository {
 
-    override fun moviePlaying(): Flow<PagingData<Movie>> =
+    override fun moviePlaying(): Flow<PagingData<MovieItem>> =
         Pager(
             PagingConfig(MovieApi.PAGE_SIZE),
             1
@@ -23,7 +24,7 @@ class MovieByPageRepository(private val movieApi: MovieApi) : MovieRepository {
             )
         }.flow
 
-    override fun movieTopRate(): Flow<PagingData<Movie>> =
+    override fun movieTopRate(): Flow<PagingData<MovieItem>> =
         Pager(
             PagingConfig(MovieApi.PAGE_SIZE)
         ) {

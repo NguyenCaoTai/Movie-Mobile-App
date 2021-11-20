@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sfg.moviemobileapp.R
 import com.sfg.moviemobileapp.data.api.dto.Movie
+import com.sfg.moviemobileapp.data.repository.model.MovieItem
 
 class MovieViewHolder(view: View) :
     RecyclerView.ViewHolder(view) {
@@ -17,19 +18,16 @@ class MovieViewHolder(view: View) :
     private val overview: TextView = view.findViewById(R.id.overview)
     private val voteAverage: TextView = view.findViewById(R.id.vote_average)
     private val thumbnail: ImageView = view.findViewById(R.id.thumbnail)
-    private var movie: Movie? = null
+    private var movie: MovieItem? = null
 
-    fun bind(movie: Movie?) {
+    fun bind(movie: MovieItem?) {
         this.movie = movie
         itemView.tag = movie?.id
-
         title.text = movie?.title
-        releaseDate.text = movie?.release_date?.split("-")?.get(0)
+        releaseDate.text = movie?.releasedYear
         overview.text = movie?.overview
-        voteAverage.text = movie?.vote_average.toString()
-
-        movie?.poster_path
-            ?.let { "https://image.tmdb.org/t/p/w185/${it}" }
+        voteAverage.text = movie?.voteAverage
+        movie?.poster
             ?.let {
                 Glide.with(itemView)
                     .load(it)

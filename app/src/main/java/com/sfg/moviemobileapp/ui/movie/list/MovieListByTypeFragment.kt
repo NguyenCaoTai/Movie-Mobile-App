@@ -91,7 +91,7 @@ class MovieListByTypeFragment : Fragment() {
     private fun initAdapter() {
         adapter = MovieAdapter { itemView ->
             bundleOf(
-                MovieDetailFragment.ARG_ITEM_ID to (itemView.tag as Int).toString()
+                MovieDetailFragment.ARG_ITEM_ID to itemView.tag as String
             ).run {
                 itemView.findNavController()
                     .navigate(R.id.show_movie_detail, this)

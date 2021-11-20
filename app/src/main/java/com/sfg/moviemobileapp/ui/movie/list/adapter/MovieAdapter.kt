@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.sfg.moviemobileapp.data.api.dto.Movie
+import com.sfg.moviemobileapp.data.repository.model.MovieItem
 
 class MovieAdapter(
     private val onItemClickListener: View.OnClickListener
-) : PagingDataAdapter<Movie, MovieViewHolder>(MOVIE_COMPARATOR) {
+) : PagingDataAdapter<MovieItem, MovieViewHolder>(MOVIE_COMPARATOR) {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder
@@ -23,14 +24,14 @@ class MovieAdapter(
     }
 
     companion object {
-        val MOVIE_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+        val MOVIE_COMPARATOR = object : DiffUtil.ItemCallback<MovieItem>() {
+            override fun areContentsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean =
                 oldItem.id == newItem.id
 
-            override fun getChangePayload(oldItem: Movie, newItem: Movie): Any? {
+            override fun getChangePayload(oldItem: MovieItem, newItem: MovieItem): Any? {
                 return null
             }
         }

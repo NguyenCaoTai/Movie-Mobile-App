@@ -25,23 +25,34 @@ class MovieDetailViewModel(
                     String.format(
                         MOVIE_INFO_FORMAT,
                         movie.vote_average,
-                        movie.runtime,
-                        movie.genres.map { it.name }.joinToString(", ")
+                        formatMovieDuration(movie.runtime),
+                        movie.genres.joinToString(", ") { it.name }
                     ),
                     movie.overview,
                     movie.backdrop_path
                         ?.takeIf { it.isNotEmpty() }
-                        ?.let { String.format(MOVIE_BASE_IMAGE, it) }
+                        ?.let { MOVIE_BASE_IMAGE.format(it) }
                 )
             }
             .map { ViewState.Success(it) }
             .catch { ViewState.Error(it.message ?: "") }
             .onStart { ViewState.Loading }
 
+    private fun formatMovieDuration(runtime: Int): String =
+        runtime
+            .let {
+                MOVIE_DURATION_TEMPLATE.format(
+                    it / HOUR_IN_MINUTE,
+                    it % HOUR_IN_MINUTE
+                )
+            }
+
     companion object {
         const val MOVIE_INFO_FORMAT = "%s/10 | %s | %s"
         const val MOVIE_BASE_IMAGE = "https://image.tmdb.org/t/p/w1280/%s"
         const val MOVIE_TITLE_TEMPLATE = "%s (%s)"
+        const val MOVIE_DURATION_TEMPLATE = "%sh %smin"
+        const val HOUR_IN_MINUTE = 60
     }
 }
 
