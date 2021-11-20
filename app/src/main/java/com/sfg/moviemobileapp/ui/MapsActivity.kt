@@ -125,8 +125,6 @@ class MapsActivity : AppCompatActivity(),
             }
         })
         getLocationPermission()
-        updateLocationUI()
-        getDeviceLocation()
     }
 
     @SuppressLint("MissingPermission")
@@ -172,6 +170,9 @@ class MapsActivity : AppCompatActivity(),
             == PackageManager.PERMISSION_GRANTED
         ) {
             locationPermissionGranted = true
+
+            updateLocationUI()
+            getDeviceLocation()
         } else {
             ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -194,10 +195,12 @@ class MapsActivity : AppCompatActivity(),
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     locationPermissionGranted = true
+
+                    updateLocationUI()
+                    getDeviceLocation()
                 }
             }
         }
-        updateLocationUI()
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {
@@ -253,6 +256,15 @@ class MapsActivity : AppCompatActivity(),
                     lastKnownLocation?.let { LatLng(it.latitude, it.longitude) }
                 )
         )
+
+        place.latLng
+            ?.run {
+                map?.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        this, DEFAULT_ZOOM.toFloat()
+                    )
+                )
+            }
     }
 
     @SuppressLint("MissingPermission")
@@ -268,7 +280,6 @@ class MapsActivity : AppCompatActivity(),
                 map?.isMyLocationEnabled = false
                 map?.uiSettings?.isMyLocationButtonEnabled = false
                 lastKnownLocation = null
-                getLocationPermission()
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
