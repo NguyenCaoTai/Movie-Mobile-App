@@ -9,7 +9,8 @@ Movie Mobile App
     + Show movie list information when tap the search place marker.
     + Show movie detail information when tap on exist movie in list. 
       
-* How to setup app.
+* How to setup, and run app.
+    + Checkout the source code from master branch.
     + Register the google map api key, and enable APIs (Maps SDK for Android, Places API).
     + Register the API key for The Movie Database API in https://developers.themoviedb.org/3/getting-started/introduction.
         And then set up correspond both API key in local.properties at root of project.
