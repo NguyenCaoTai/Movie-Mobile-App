@@ -35,8 +35,8 @@ class MovieDetailViewModel(
                 )
             }
             .map { ViewState.Success(it) }
-            .catch { ViewState.Error(it.message ?: "") }
-            .onStart { ViewState.Loading }
+            .catch<ViewState<MovieInfo>> { emit(ViewState.Error(it.message ?: "")) }
+            .onStart { emit(ViewState.Loading) }
 
     private fun formatMovieDuration(runtime: Int): String =
         runtime

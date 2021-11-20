@@ -8,8 +8,10 @@ import com.sfg.moviemobileapp.data.api.MovieApi
 import com.sfg.moviemobileapp.data.api.dto.MovieDetail
 import com.sfg.moviemobileapp.data.repository.model.MovieItem
 import com.sfg.moviemobileapp.data.repository.model.MovieType
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 
 class MovieByPageRepository(private val movieApi: MovieApi) : MovieRepository {
 

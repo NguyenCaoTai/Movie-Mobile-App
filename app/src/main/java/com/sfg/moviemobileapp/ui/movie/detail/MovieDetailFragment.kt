@@ -29,8 +29,7 @@ class MovieDetailFragment : Fragment() {
     val progress: ProgressDialog by lazy {
         ProgressDialog(requireContext())
             .apply {
-                setTitle("Loading")
-                setCancelable(false) // disable dismiss by tapping outside of the dialog
+                setCancelable(false)
             }
     }
 
